@@ -53,7 +53,7 @@ Route::post('process/declined/{id}', function (Request $request) {
 
 Route::post('process/add', function (Request $request) {
     $body = $request->all();
-    Log::emergency($body['application_id']);
+    Log::emergency($body);
     $model = new \App\Models\Leads();
     $model->application_id = $body['application_id'];
     $model->message_id = (int)$body['message_id'];
@@ -63,6 +63,7 @@ Route::post('process/add', function (Request $request) {
 
 Route::post('process/approved/{id}', function (Request $request) {
     $body = $request->all();
+    Log::emergency($body);
     $id = $body['message_id'];
 
     $requestBody['pipeline_id'] = PIPELINE_ID;
