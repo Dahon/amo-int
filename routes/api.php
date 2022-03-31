@@ -236,8 +236,8 @@ Route::post('test', function (Request $request) {
         if ($curl->responseCode == 200) {
             AmoCrmService::addLead($id, 'Заявка отправлена, ждите ответа!');
             $model = new \App\Models\Leads();
-            $model->application_id = $response['data'][0]['applicationId'];
-            $model->message_id = $response['data'][0]['asterId'];
+            $model->application_id = $response[0]['applicationId'];
+            $model->message_id = $response[0]['asterId'];
             $model->save();
         }
         return 204;
