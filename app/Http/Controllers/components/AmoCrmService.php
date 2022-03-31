@@ -77,6 +77,8 @@
           ];
 
           $curl = new CurlTransport();
+          Log::error($requestBody);
+          Log::error($integration);
 
           $accessTokenResponse = $curl->send($url, $headers, $requestBody);
 
