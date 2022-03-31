@@ -176,6 +176,8 @@ Route::post('test', function (Request $request) {
                 } elseif ($dictionary[$value['name']] == 'fullName' || $dictionary[$value['name']] == 'relationshipKind' || $dictionary[$value['name']] == 'phoneNo' ) {
                     $contact_person[$dictionary[$value['name']]] = $value['values'][0]['value'];
                     continue;
+                } elseif ($dictionary[$value['name']] == 'relationshipKind') {
+                    $contact_person[$dictionary[$value['name']]] = '0';
                 }
                 elseif ($dictionary[$value['name']] !== 'mobilePhoneNo' && $dictionary[$value['name']] !== 'workPhoneNo' && $dictionary[$value['name']] !== 'workExperienceTotal' && $dictionary[$value['name']] !== 'organizationPhoneNo' && $dictionary[$value['name']] !== 'workExperienceLast' && $dictionary[$value['name']] !== 'regPhoneNo' && $dictionary[$value['name']] !== 'iin' && $dictionary[$value['name']] !== 'workBin' && $dictionary[$value['name']] !== 'docNo' && is_numeric($value['values'][0]['value'])) {
                     $requestBody[$dictionary[$value['name']]] = (int)$value['values'][0]['value'];
