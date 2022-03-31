@@ -15,6 +15,8 @@
               $integration = self::accessToken($integration);
           }
 
+          Log::emergency('asdsad', $integration);
+
           if (!$integration) {
               throw new \Exception('AmoCrm integration not found', 4001);
           }
