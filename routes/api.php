@@ -36,16 +36,16 @@ Route::post('process/declined/{id}', function (Request $request) {
     if (!empty($body)) {
         $requestBody['status_id'] = ALTER;
         $requestBody['updated_at'] = time();
-        AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка в альтернативах');
         $model = Leads::where('application_id', $id)->first();
+        AmoCrmService::changeStatusOfLead($model->message_id, $requestBody, 'Заявка в альтернативах');
         $model->send_status = 2;
         $model->save();
         return response()->json(['success' => 'success'], 200);
     } else {
         $requestBody['status_id'] = DECLINED;
         $requestBody['updated_at'] = time();
-        AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка отказана');
         $model = Leads::where('application_id', $id)->first();
+        AmoCrmService::changeStatusOfLead($model->message_id, $requestBody, 'Заявка отказана');
         $model->send_status = 3;
         $model->save();
         return response()->json(['success' => 'success'], 200);
