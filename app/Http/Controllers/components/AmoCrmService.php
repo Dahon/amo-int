@@ -12,6 +12,7 @@
           $integration = AmoTokens::findOrFail(1);
           Log::emergency('test'.json_encode($integration));
           if ($integration && !$integration->access_token) {
+              Log::emergency($integration->access_token);
               $integration = self::accessToken($integration);
           }
 
