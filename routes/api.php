@@ -173,7 +173,7 @@ Route::post('test', function (Request $request) {
                 if ($dictionary[$value['name']] == 'fromDate' || $dictionary[$value['name']] == 'toDate' || $dictionary[$value['name']] == 'dateBirth') {
                     $requestBody[$dictionary[$value['name']]] = date('Y-m-d', $value['values'][0]);
                     continue;
-                } elseif ($dictionary[$value['name']] == 'fullName' || $dictionary[$value['name']] == 'relationshipKind' || $dictionary[$value['name']] == 'phoneNo' ) {
+                } elseif ($dictionary[$value['name']] == 'fullName' || $dictionary[$value['name']] == 'phoneNo' ) {
                     $contact_person[$dictionary[$value['name']]] = $value['values'][0]['value'];
                     continue;
                 } elseif ($dictionary[$value['name']] == 'relationshipKind') {
