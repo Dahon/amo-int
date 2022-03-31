@@ -80,6 +80,8 @@
 
           $accessTokenResponse = $curl->send($url, $headers, $requestBody);
 
+          Log::error($accessTokenResponse);
+
           if ($curl->errorNo) {
               Log::emergency($accessTokenResponse);
           }
