@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('process/declined/{id}', function (Request $request) {
     $body = $request->all();
+    Log::emergency('declined'.json_encode($body));
     $id = $request->id;
     $requestBody['pipeline_id'] = PIPELINE_ID;
     if ($body) {
@@ -63,7 +64,7 @@ Route::post('process/add', function (Request $request) {
 
 Route::post('process/approved/{id}', function (Request $request) {
     $body = $request->all();
-    Log::emergency($body);
+    Log::emergency('approved'.json_encode($body));
     $id = $body['message_id'];
 
     $requestBody['pipeline_id'] = PIPELINE_ID;
@@ -83,6 +84,7 @@ Route::post('test', function (Request $request) {
     $typeLead = isset($body['leads']['add']) ? 'add' : (isset($body['leads']['update']) ? 'update' : null);
     if (!$typeLead) return false;
     $responseBody = $body['leads'][$typeLead][0]['custom_fields'] ?? null;
+    if (!$responseBody) return false;
     Log::emergency($responseBody);
     $id = $body['leads'][$typeLead][0]['id'];
     $dictionary = [
@@ -160,11 +162,7 @@ Route::post('test', function (Request $request) {
         'Номер телефона' => "phoneNo",
     ];
     $leadItem = AmoCrmService::getLead($id);
-    Log::emergency(count($leadItem));
-    Log::emergency($leadItem);
-    Log::emergency($typeLead);
     if (!count($leadItem)) {
-        Log::emergency('test');
         $requestBody = [];
         $contact_person = [];
         $requestBody['partner'] = '0003';
@@ -210,7 +208,6 @@ Route::post('test', function (Request $request) {
         }
         $requestBody['contactPerson'][] = $contact_person;
         $requestBody['pledgeType'] = '11';
-        Log::emergency($requestBody);
         $curl = new CurlTransport();
         $token = '5c33597dcd8c4064a01ab10ebd4bdb12';
         $headers = [
@@ -224,7 +221,6 @@ Route::post('test', function (Request $request) {
         Log::emergency($curl->responseCode);
         if (($curl->responseCode == 500 || $curl->responseCode == 400) && isset($response['Msg'])) {
             AmoCrmService::addLead($id, $response['Msg']);
-            Log::debug($curl->responseCode);
             return false;
         }
 
@@ -242,7 +238,6 @@ Route::post('test', function (Request $request) {
         }
         return 204;
     } else {
-        Log::error('Catch Erro 231312r');
     }
 
 });
