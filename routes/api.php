@@ -181,7 +181,7 @@ Route::post('test', function (Request $request) {
                     $requestBody[$dictionary[$value['name']]] = (int)$value['values'][0]['value'];
                     continue;
                 } elseif ($dictionary[$value['name']] == 'firmId') {
-                    $requestBody[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Алматы' ? '26' : '16';
+                    $requestBody[$dictionary[$value['name']]] =  'test'; // $value['values'][0]['value'] == 'Алматы' ? '26' : '16';
                     continue;
                 } elseif ($dictionary[$value['name']] == 'paymentMtd') {
                     $requestBody[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Аннуитет' ? 3 : 4;
