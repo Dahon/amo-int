@@ -11,8 +11,8 @@
     const PENDING = 0;
     const APPROVED_ID = 47037616;
     const PIPELINE_ID = 4140517;
-    const ALTER = 2;
-    const DECLINED = 3;
+    const ALTER = 47037619;
+    const DECLINED = 47037622;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,25 +30,37 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('process/declined/{id}', function (Request $request) {
     $body = $request->all();
-    Log::emergency('declined'.json_encode($body));
     $id = $request->id;
     $requestBody['pipeline_id'] = PIPELINE_ID;
+
     if (!empty($body)) {
-        $requestBody['status_id'] = ALTER;
-        $requestBody['updated_at'] = time();
-        $model = Leads::where('application_id', $id)->first();
-        AmoCrmService::changeStatusOfLead($model->message_id, $requestBody, 'Заявка в альтернативах');
-        $model->send_status = 2;
-        $model->save();
-        return response()->json(['success' => 'success'], 200);
-    } else {
-        $requestBody['status_id'] = DECLINED;
-        $requestBody['updated_at'] = time();
-        $model = Leads::where('application_id', $id)->first();
-        AmoCrmService::changeStatusOfLead($model->message_id, $requestBody, 'Заявка отказана');
-        $model->send_status = 3;
-        $model->save();
-        return response()->json(['success' => 'success'], 200);
+        $desc = explode(',', $body['description']);
+        $alter_array = [];
+        for ($i = 0; $i < count($desc); $i++) {
+            $val = explode(':', $desc[$i]);
+            $alter_array[$val[0]] = $val[1];
+        }
+        if ($alter_array['duration'] != 0 && $alter_array[' amount'] != 0) {
+            $requestBody['status_id'] = ALTER;
+            $requestBody['updated_at'] = time();
+            $model = Leads::where('application_id', $id)->first();
+            $note = 'Заявка в альтернативах' . PHP_EOL;
+            $note .= 'Продолжительность:' .$alter_array['duration'] . PHP_EOL;
+            $note .= 'Сумма:' .$alter_array[' amount'] . PHP_EOL;
+            $note .= 'Процентная ставка:' .$alter_array[' interest rate'] . PHP_EOL;
+            AmoCrmService::changeStatusOfLead($model->message_id, $requestBody, $note);
+            $model->send_status = 2;
+            $model->save();
+            return response()->json(['alter' => $id], 200);
+        } else {
+            $requestBody['status_id'] = DECLINED;
+            $requestBody['updated_at'] = time();
+            $model = Leads::where('application_id', $id)->first();
+            AmoCrmService::changeStatusOfLead($model->message_id, $requestBody, 'Заявка отказана');
+            $model->send_status = 3;
+            $model->save();
+            return response()->json(['declined' => $id], 200);
+        }
     }
 });
 
@@ -64,9 +76,7 @@ Route::post('process/add', function (Request $request) {
 
 Route::post('process/approved/{id}', function (Request $request) {
     $body = $request->all();
-    Log::emergency('approved'.json_encode($body));
     $id = $body['message_id'];
-
     $requestBody['pipeline_id'] = PIPELINE_ID;
     $requestBody['status_id'] = APPROVED_ID;
     $requestBody['updated_at'] = time();
