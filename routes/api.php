@@ -91,6 +91,7 @@ Route::post('process/approved/{id}', function (Request $request) {
 
 Route::post('test', function (Request $request) {
     $body = $request->all();
+    Log::error($body);
     $typeLead = isset($body['leads']['add']) ? 'add' : (isset($body['leads']['update']) ? 'update' : null);
     if (!$typeLead) return false;
     $responseBody = $body['leads'][$typeLead][0]['custom_fields'] ?? null;
@@ -247,8 +248,7 @@ Route::post('test', function (Request $request) {
             $model->application_id = $response['applicationId'];
             $model->message_id = $response['asterId'];
             $model->save();
-            $d = AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка отправлена, ждите ответа!');
-            Log::error($d);
+            AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка отправлена, ждите ответа!');
         }
         return 204;
     } else {
