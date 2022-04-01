@@ -8,11 +8,11 @@
     use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\Route;
 
-    const PENDING = 0;
-    const APPROVED_ID = 47037616;
-    const PIPELINE_ID = 4140517;
-    const ALTER = 47037619;
-    const DECLINED = 47037622;
+    const PIPELINE_ID = 5287444;
+    const PENDING = 47135884;
+    const APPROVED_ID = 47135872;
+    const ALTER = 47135875;
+    const DECLINED = 47135878;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -240,11 +240,14 @@ Route::post('test', function (Request $request) {
         }
 
         if ($curl->responseCode == 200) {
-            AmoCrmService::addLead($id, 'Заявка отправлена, ждите ответа!');
+            $requestBody['pipeline_id'] = PIPELINE_ID;
+            $requestBody['status_id'] = PENDING;
+            $requestBody['updated_at'] = time();
             $model = new \App\Models\Leads();
-            $model->application_id = $response[0]['applicationId'];
-            $model->message_id = $response[0]['asterId'];
+            $model->application_id = $response['applicationId'];
+            $model->message_id = $response['asterId'];
             $model->save();
+            AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка отправлена, ждите ответа!');
         }
         return 204;
     } else {
