@@ -247,7 +247,8 @@ Route::post('test', function (Request $request) {
             $model->application_id = $response['applicationId'];
             $model->message_id = $response['asterId'];
             $model->save();
-            AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка отправлена, ждите ответа!');
+            $d = AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка отправлена, ждите ответа!');
+            Log::error($d);
         }
         return 204;
     } else {
