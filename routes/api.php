@@ -30,9 +30,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('process/declined/{id}', function (Request $request) {
     $body = $request->all();
+    Log::info('declined body');
+    Log::info(json_encode($body));
     $id = $request->id;
     $requestBody['pipeline_id'] = PIPELINE_ID;
-
     if (!empty($body)) {
         $desc = explode(',', $body['description']);
         $alter_array = [];
@@ -75,6 +76,8 @@ Route::post('process/add', function (Request $request) {
 
 Route::post('process/approved/{id}', function (Request $request) {
     $body = $request->all();
+    Log::info('approved body:');
+    Log::info(json_encode($body));
     $id = $body['message_id'];
     $requestBody['pipeline_id'] = PIPELINE_ID;
     $requestBody['status_id'] = APPROVED_ID;
