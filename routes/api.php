@@ -66,7 +66,6 @@ Route::post('process/declined/{id}', function (Request $request) {
 
 Route::post('process/add', function (Request $request) {
     $body = $request->all();
-    Log::emergency($body);
     $model = new \App\Models\Leads();
     $model->application_id = $body['application_id'];
     $model->message_id = (int)$body['message_id'];
@@ -91,12 +90,12 @@ Route::post('process/approved/{id}', function (Request $request) {
 
 Route::post('test', function (Request $request) {
     $body = $request->all();
-    Log::error($body);
     $typeLead = isset($body['leads']['add']) ? 'add' : (isset($body['leads']['update']) ? 'update' : null);
     if (!$typeLead) return false;
+    $pipeId = $body['leads'][$typeLead][0]['pipeline_id'];
+    if ($pipeId != PIPELINE_ID) return false;
     $responseBody = $body['leads'][$typeLead][0]['custom_fields'] ?? null;
     if (!$responseBody) return false;
-    Log::emergency($responseBody);
     $id = $body['leads'][$typeLead][0]['id'];
     $dictionary = [
         'ID partner' => 'partner',
@@ -227,7 +226,6 @@ Route::post('test', function (Request $request) {
         ];
         $url = 'https://dev-api.kmf.kz/svc/aster/createApplication';
         $response = $curl->send($url, $headers, $requestBody);
-        Log::emergency(json_encode($requestBody));
         Log::emergency($response);
         Log::emergency($curl->responseCode);
         if (($curl->responseCode == 500 || $curl->responseCode == 400) && isset($response['Msg'])) {

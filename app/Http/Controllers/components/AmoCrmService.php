@@ -11,11 +11,8 @@
       public static function addLead($leadId, string $note) {
           $integration = AmoTokens::findOrFail(1);
           if ($integration && !$integration->access_token) {
-              Log::emergency($integration->access_token);
               $integration = self::accessToken($integration);
           }
-
-          Log::emergency($integration);
 
           if (!$integration) {
               throw new \Exception('AmoCrm integration not found', 4001);
@@ -54,8 +51,6 @@
           ];
 
           $response = $curl->send($url, $headers, $requestBody, 'PATCH');
-          Log::error($response);
-
           self::addNote($integration, $leadId, $note);
       }
 
@@ -76,12 +71,8 @@
           ];
 
           $curl = new CurlTransport();
-          Log::error($requestBody);
-          Log::error($integration);
 
           $accessTokenResponse = $curl->send($url, $headers, $requestBody);
-
-          Log::error($accessTokenResponse);
 
           if ($curl->errorNo) {
               Log::emergency($accessTokenResponse);
