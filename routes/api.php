@@ -227,7 +227,7 @@ Route::post('test', function (Request $request) {
             'Authorization:'.$token,
             'Content-Type: application/json'
         ];
-        $url = 'https://dev-api.kmf.kz/svc/aster/createApplication';
+        $url = 'https://api.kmf.kz/svc/aster/createApplication';
         $response = $curl->send($url, $headers, $requestBody);
         Log::emergency($response);
         Log::emergency($curl->responseCode);
