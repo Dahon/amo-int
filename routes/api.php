@@ -229,7 +229,7 @@ Route::post('test', function (Request $request) {
         ];
         $url = 'https://api.kmf.kz/svc/aster/createApplication';
         $response = $curl->send($url, $headers, $requestBody);
-        Log::emergency($response);
+        Log::emergency('kmf-id'.$id.'-response-'.json_encode($response));
         Log::emergency($curl->responseCode);
         if (($curl->responseCode == 500 || $curl->responseCode == 400) && isset($response['Msg'])) {
             AmoCrmService::addLead($id, $response['Msg']);
@@ -247,7 +247,7 @@ Route::post('test', function (Request $request) {
             $requestBody['updated_at'] = time();
             $model = new \App\Models\Leads();
             $model->application_id = $response['applicationId'];
-            $model->message_id = $response['asterId'];
+            $model->message_id = $id;
             $model->save();
             AmoCrmService::changeStatusOfLead($id, $requestBody, 'Заявка отправлена, ждите ответа!');
         }
