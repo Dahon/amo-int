@@ -51,6 +51,7 @@
           ];
 
           $response = $curl->send($url, $headers, $requestBody, 'PATCH');
+          Log::info('changeStatus'.json_encode($response));
           self::addNote($integration, $leadId, $note);
       }
 
