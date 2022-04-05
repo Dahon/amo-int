@@ -261,3 +261,9 @@ Route::post('test', function (Request $request) {
     }
 
 });
+
+Route::post('webhook', function (Request $request) {
+    $bot = Telegram::bot('mybot');
+    $result = $bot->getWebhookUpdates();
+    Log::error('bot'.json_encode($result));
+});

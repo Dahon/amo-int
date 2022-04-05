@@ -8,6 +8,8 @@
         "php": "^8.0.2",
         "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/psr7": "1.*",
+        "irazasyed/telegram-bot-sdk": "3.5.0",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7"
