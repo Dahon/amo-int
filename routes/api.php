@@ -175,7 +175,7 @@ Route::post('test', function (Request $request) {
         'Номер телефона' => "phoneNo",
     ];
     $leadItem = AmoCrmService::getLead($id);
-    if (!count($leadItem)) {
+    if (!count($leadItem) || $leadItem[0]) {
         $requestBody = [];
         $contact_person = [];
         $requestBody['partner'] = '0003';
@@ -253,7 +253,7 @@ Route::post('test', function (Request $request) {
         }
         return 204;
     } else {
-        AmoCrmService::addLead($id, 'Ваша заявка по этой сделке уже отправлена! Либо создайте новый!');
+//        AmoCrmService::addLead($id, 'Ваша заявка по этой сделке уже отправлена! Либо создайте новый!');
     }
 
 });
