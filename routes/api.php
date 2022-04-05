@@ -265,5 +265,10 @@ Route::post('test', function (Request $request) {
 Route::post('webhook', function (Request $request) {
     $bot = Telegram::bot('mybot');
     $result = $bot->getWebhookUpdates();
+    $chat_id = $result->getChat()->getId();
+    $bot->sendMessage([
+        'text' => 'Пока данных нет',
+        'chat_id' => $chat_id
+    ]);
     Log::error('bot'.json_encode($result));
 });
