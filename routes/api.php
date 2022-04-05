@@ -253,6 +253,7 @@ Route::post('test', function (Request $request) {
         }
         return 204;
     } else {
+        AmoCrmService::addLead($id, 'Ваша заявка по этой сделке уже отправлена! Либо создайте новый!');
     }
 
 });
