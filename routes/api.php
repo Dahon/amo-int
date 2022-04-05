@@ -189,7 +189,11 @@ Route::post('test', function (Request $request) {
                     $contact_person[$dictionary[$value['name']]] = $value['values'][0]['value'];
                     continue;
                 } elseif ($dictionary[$value['name']] == 'relationshipKind') {
-                    $contact_person[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Коллега' ? '001' : ($value['values'][0]['value'] == 'Друг' ? '002' : ($value['values'][0]['value'] == 'Супруг(а)' ? '003' : ($value['values'][0]['value'] == 'Родственник' ? '004' : '005')));
+                    if ($value['values'][0]['value'] != '') {
+                        $contact_person[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
+                    } else {
+                        $contact_person[$dictionary[$value['name']]] = '0';
+                    }
                     continue;
                 }
                 elseif ($dictionary[$value['name']] !== 'regApartment' && $dictionary[$value['name']] !== 'regHouse' && $dictionary[$value['name']] !== 'mobilePhoneNo' && $dictionary[$value['name']] !== 'workPhoneNo' && $dictionary[$value['name']] !== 'workExperienceTotal' && $dictionary[$value['name']] !== 'organizationPhoneNo' && $dictionary[$value['name']] !== 'workExperienceLast' && $dictionary[$value['name']] !== 'regPhoneNo' && $dictionary[$value['name']] !== 'iin' && $dictionary[$value['name']] !== 'workBin' && $dictionary[$value['name']] !== 'docNo' && is_numeric($value['values'][0]['value'])) {
