@@ -175,7 +175,7 @@ Route::post('test', function (Request $request) {
         'Номер телефона' => "phoneNo",
     ];
     $leadItem = AmoCrmService::getLead($id);
-    if (!count($leadItem) || $leadItem[0]) {
+    if (!count($leadItem)) {
         $requestBody = [];
         $contact_person = [];
         $requestBody['partner'] = '0003';
