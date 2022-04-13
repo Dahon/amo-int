@@ -29,7 +29,7 @@
 
       public static function changeStatusOfLead($leadId, $requestBody, string $note, $amoId) {
           $integration = AmoTokens::findOrFail($amoId);
-
+          Log::info('$integration'.json_encode($integration));
           if ($integration && !$integration->access_token) {
               $integration = self::accessToken($integration, $amoId);
           }
@@ -346,6 +346,8 @@
               } else {
                   $requestBody['status_id'] = $declinedId;
                   $requestBody['updated_at'] = time();
+                  Log::info('reqBody');
+                  Log::info($requestBody);
                   $model = Leads::where('company_id', '=', $amoId)->where('application_id', $id)->first();
                   AmoCrmService::changeStatusOfLead($model->message_id, $requestBody, 'Заявка отказана', $amoId);
                   $model->send_status = 3;
