@@ -39,13 +39,15 @@ Route::post('token/{id}', function (Request $request) {
     AmoCrmService::changeStatusOfLead(1, $requestBody, $note, 2);
 });
 
-Route::post('process/declined/{id}', function (Request $request) {
-    $body = $request->all();
-    Log::info('declined body');
-    Log::info(json_encode($body));
-    $id = $request->id;
-    return AmoCrmService::declined($id, $body, AmoTypeConstants::LIFE_PIPELINE_ID, AmoTypeConstants::LIFE_ALTER, AmoTypeConstants::LIFE_DECLINED, 1);
-});
+//Route::post('process/declined/{id}', function (Request $request) {
+//    $body = $request->all();
+//    Log::info('declined body');
+//    Log::info(json_encode($body));
+//    $id = $request->id;
+//    return AmoCrmService::declined($id, $body, AmoTypeConstants::LIFE_PIPELINE_ID, AmoTypeConstants::LIFE_ALTER, AmoTypeConstants::LIFE_DECLINED, 1);
+//});
+
+Route::post('process/declined/{id}', 'AmoIntController@lifeAutoDeclined')->name('amo.lifeAutoDeclined');
 
 Route::post('process/approved/{id}', function (Request $request) {
     $body = $request->all();
