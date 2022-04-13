@@ -33,13 +33,4 @@ class AmoIntController extends Controller
         return AmoCrmService::test($id, '0004', $responseBody, 2, AmoTypeConstants::AUTOSTART_PIPELINE_ID, AmoTypeConstants::AUTOSTART_PENDING);
     }
 
-
-    public function lifeAutoDeclined(Request $request) {
-        $body = $request->all();
-        Log::info('declined body');
-        Log::info(json_encode($body));
-        $id = $request->id;
-        return AmoCrmService::declined($id, $body, AmoTypeConstants::LIFE_PIPELINE_ID, AmoTypeConstants::LIFE_ALTER, AmoTypeConstants::LIFE_DECLINED, 1);
-    }
-
 }
