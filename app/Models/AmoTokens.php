@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 class AmoTokens extends Model
 {
     protected $fillable = [
-        'access_token', 'refresh_token', 'expires_in', 'expired_time',
+        'access_token', 'refresh_token', 'expires_in', 'expired_time', 'company_id',
     ];
 
 }
