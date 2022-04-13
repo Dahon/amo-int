@@ -19,7 +19,7 @@
           }
 
           if (strtotime("now") >= $integration->expired_time) {
-              return self::refreshAccessToken($integration, $amoId);
+              $integration = self::refreshAccessToken($integration, $amoId);
           }
 
           self::addNote($integration, $leadId, $note);
@@ -34,7 +34,7 @@
           }
 
           if (strtotime("now") >= $integration->expired_time) {
-              return self::refreshAccessToken($integration, $amoId);
+              $integration = self::refreshAccessToken($integration, $amoId);
           }
 
           if (!$integration->access_token) {
