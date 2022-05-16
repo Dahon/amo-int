@@ -30,7 +30,7 @@
       public static function changeStatusOfLead($leadId, $requestBody, string $note, $amoId) {
           $integration = AmoTokens::findOrFail($amoId);
           Log::error('$integration');
-          Log::error($integration);
+          Log::error($integration->access_token);
           if ($integration && !$integration->access_token) {
               $integration = self::accessToken($integration, $amoId);
           }
