@@ -108,7 +108,7 @@
           $curl = new CurlTransport();
 
           $refreshTokenResponse = $curl->send($url, $headers, $requestBody);
-//        Log::debug('refreshToken response', $refreshTokenResponse);
+        Log::debug('refreshToken response', $refreshTokenResponse);
 
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($refreshTokenResponse, $amoId);
