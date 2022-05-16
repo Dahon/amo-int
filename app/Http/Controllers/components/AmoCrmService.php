@@ -31,7 +31,7 @@
           $integration = AmoTokens::findOrFail($amoId);
           Log::error('$integration');
           Log::error($integration->access_token);
-          if ($integration && !$integration->access_token) {
+          if ($integration && empty($integration->access_token)) {
               $integration = self::accessToken($integration, $amoId);
           }
 
@@ -40,7 +40,7 @@
           }
           Log::error('$integration2');
           Log::error($integration);
-          if (!empty($integration->access_token)) {
+          if (empty($integration->access_token)) {
               throw new \Exception('AmoCrm integration not found');
           }
           $curl = new CurlTransport();
@@ -85,6 +85,7 @@
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($accessTokenResponse, $amoId);
           }
+          Log::error('res', $result);
           return $result;
       }
 
