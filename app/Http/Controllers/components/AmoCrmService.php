@@ -318,6 +318,8 @@
                   $requestBody['contactPerson'][] = $contact_person_3;
               }
 
+              Log::emergency($requestBody['contactPerson']);
+
               $requestBody['pledgeType'] = '11';
               $curl = new CurlTransport();
               $token = '5c33597dcd8c4064a01ab10ebd4bdb12';
