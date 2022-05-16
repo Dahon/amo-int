@@ -85,7 +85,8 @@
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($accessTokenResponse, $amoId);
           }
-          Log::error('res', $result);
+          Log::error('res');
+          Log::error($result);
           return $result;
       }
 
@@ -112,7 +113,8 @@
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($refreshTokenResponse, $amoId);
           }
-          Log::error('res', $result);
+          Log::error('res');
+          Log::error($result);
 
           return $result;
       }
