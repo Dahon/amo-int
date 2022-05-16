@@ -357,6 +357,7 @@
               }
               return 204;
           } else {
+              Log::emergency('test22');
 //        AmoCrmService::addLead($id, 'Ваша заявка по этой сделке уже отправлена! Либо создайте новый!');
           }
 
