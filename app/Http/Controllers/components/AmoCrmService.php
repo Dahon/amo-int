@@ -319,7 +319,6 @@
                   $requestBody['contactPerson'][] = $contact_person_3;
               }
 
-              $myArray[count($myArray)-1]['list'][] = 'new element';
               $requestBody['pledgeType'] = '11';
               $curl = new CurlTransport();
               $token = '5c33597dcd8c4064a01ab10ebd4bdb12';
