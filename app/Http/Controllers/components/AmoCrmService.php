@@ -37,7 +37,7 @@
               $integration = self::refreshAccessToken($integration, $amoId);
           }
 
-          if (!$integration->access_token) {
+          if (!(bool)$integration->access_token) {
               throw new \Exception('AmoCrm integration not found');
           }
           $curl = new CurlTransport();
