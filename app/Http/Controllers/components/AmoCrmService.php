@@ -38,12 +38,14 @@
           if (strtotime("now") >= $integration->expired_time) {
               $integration = self::refreshAccessToken($integration, $amoId);
           }
-
+          Log::error('$integration2');
+          Log::error($integration);
           if (!empty($integration->access_token)) {
               throw new \Exception('AmoCrm integration not found');
           }
           $curl = new CurlTransport();
-
+          Log::error('domain');
+          Log::error($integration->domain);
           $url = $integration->domain . 'api/v4/leads/'.$leadId;
 
           $headers = [
