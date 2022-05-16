@@ -233,11 +233,19 @@
               'ФИО' => "fullName",
               'Кем приходится заемщику' => "relationshipKind",
               'Номер телефона' => "phoneNo",
+              'ФИО#2' => "fullName2",
+              'Кем приходится заемщику#2' => "relationshipKind2",
+              'Номер телефона#2' => "phoneNo2",
+              'ФИО#3' => "fullName3",
+              'Кем приходится заемщику#3' => "relationshipKind3",
+              'Номер телефона#3' => "phoneNo3",
           ];
           $leadItem = self::getLead($id, $amoId);
           if (!count($leadItem)) {
               $requestBody = [];
               $contact_person = [];
+              $contact_person_2 = [];
+              $contact_person_3 = [];
               $requestBody['partner'] = $partnerId;
               $requestBody['partnerAppId'] = $id;
               foreach ($responseBody as $i => $value) {
@@ -253,6 +261,26 @@
                               $contact_person[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
                           } else {
                               $contact_person[$dictionary[$value['name']]] = '0';
+                          }
+                          continue;
+                      } elseif ($dictionary[$value['name']] == 'fullName2' || $dictionary[$value['name']] == 'phoneNo2' ) {
+                          $contact_person_2[$dictionary[$value['name']]] = $value['values'][0]['value'];
+                          continue;
+                      } elseif ($dictionary[$value['name']] == 'relationshipKind2') {
+                          if ($value['values'][0]['value'] != '') {
+                              $contact_person_2[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
+                          } else {
+                              $contact_person_2[$dictionary[$value['name']]] = '0';
+                          }
+                          continue;
+                      } elseif ($dictionary[$value['name']] == 'fullName3' || $dictionary[$value['name']] == 'phoneNo3' ) {
+                          $contact_person_3[$dictionary[$value['name']]] = $value['values'][0]['value'];
+                          continue;
+                      } elseif ($dictionary[$value['name']] == 'relationshipKind3') {
+                          if ($value['values'][0]['value'] != '') {
+                              $contact_person_3[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
+                          } else {
+                              $contact_person_3[$dictionary[$value['name']]] = '0';
                           }
                           continue;
                       }
@@ -284,6 +312,14 @@
                   }
               }
               $requestBody['contactPerson'][] = $contact_person;
+              if (!empty($contact_person_2)) {
+                  $requestBody['contactPerson'][] = $contact_person_2;
+              }
+              if (!empty($contact_person_3)) {
+                  $requestBody['contactPerson'][] = $contact_person_3;
+              }
+
+              $myArray[count($myArray)-1]['list'][] = 'new element';
               $requestBody['pledgeType'] = '11';
               $curl = new CurlTransport();
               $token = '5c33597dcd8c4064a01ab10ebd4bdb12';
