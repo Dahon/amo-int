@@ -311,12 +311,12 @@
                   }
               }
               $requestBody['contactPerson'][] = $contact_person;
-              if (!empty($contact_person_2)) {
-                  $requestBody['contactPerson'][] = $contact_person_2;
-              }
-              if (!empty($contact_person_3)) {
-                  $requestBody['contactPerson'][] = $contact_person_3;
-              }
+//              if (!empty($contact_person_2)) {
+//                  $requestBody['contactPerson'][] = $contact_person_2;
+//              }
+//              if (!empty($contact_person_3)) {
+//                  $requestBody['contactPerson'][] = $contact_person_3;
+//              }
 
               Log::emergency($requestBody['contactPerson']);
 
