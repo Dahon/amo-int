@@ -158,6 +158,8 @@
       }
 
       public static function test($id, $partnerId, $responseBody, $amoId, $pipeId, $pendingId) {
+          Log::emergency('1');
+          Log::emergency(json_encode($responseBody));
           $dictionary = [
               'ID partner' => 'partner',
               'ID lead' => "partnerAppId",
