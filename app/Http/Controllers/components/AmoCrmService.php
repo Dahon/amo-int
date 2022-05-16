@@ -291,7 +291,7 @@
               ];
               $url = 'https://api.kmf.kz:8443/svc/aster/createApplication';
               Log::emergency('111');
-              Log::emergency($curl->$requestBody);
+              Log::emergency(json_encode($requestBody));
               $response = $curl->send($url, $headers, $requestBody);
               Log::emergency('kmf-id'.$id.'-response-'.json_encode($response));
               Log::emergency($curl->responseCode);
