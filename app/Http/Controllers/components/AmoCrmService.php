@@ -158,6 +158,7 @@
       }
 
       public static function test($id, $partnerId, $responseBody, $amoId, $pipeId, $pendingId) {
+          Log::emergency('test');
           $dictionary = [
               'ID partner' => 'partner',
               'ID lead' => "partnerAppId",
