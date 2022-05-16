@@ -91,6 +91,8 @@
       }
 
       public static function refreshAccessToken(AmoTokens $integration, $amoId) {
+          Log::error('refresh');
+          Log::error($integration);
           $result = false;
 
           $url = $integration->domain . 'oauth2/access_token';
