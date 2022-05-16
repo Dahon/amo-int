@@ -112,6 +112,7 @@
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($refreshTokenResponse, $amoId);
           }
+          Log::error('res', $result);
 
           return $result;
       }
