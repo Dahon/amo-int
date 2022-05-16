@@ -245,6 +245,7 @@
               $contact_person = [];
               $contact_person_2 = [];
               $contact_person_3 = [];
+              Log::emergency('222');
               $requestBody['partner'] = $partnerId;
               $requestBody['partnerAppId'] = $id;
               foreach ($responseBody as $i => $value) {
