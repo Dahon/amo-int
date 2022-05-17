@@ -79,7 +79,7 @@
           $curl = new CurlTransport();
 
           $accessTokenResponse = $curl->send($url, $headers, $requestBody);
-          Log::debug('access response', $refreshTokenResponse);
+          Log::debug('access response', $accessTokenResponse);
           if ($curl->errorNo) {
               Log::emergency($accessTokenResponse);
           }
