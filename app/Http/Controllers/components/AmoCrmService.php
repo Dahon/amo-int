@@ -60,6 +60,8 @@
 
       public static function accessToken($integration, $amoId) {
           $result = false;
+          Log::error('access');
+          Log::error($integration);
 
           $url = $integration->domain . 'oauth2/access_token';
           $headers = [
@@ -77,7 +79,7 @@
           $curl = new CurlTransport();
 
           $accessTokenResponse = $curl->send($url, $headers, $requestBody);
-
+          Log::debug('access response', $refreshTokenResponse);
           if ($curl->errorNo) {
               Log::emergency($accessTokenResponse);
           }
@@ -110,7 +112,7 @@
           $curl = new CurlTransport();
 
           $refreshTokenResponse = $curl->send($url, $headers, $requestBody);
-        Log::debug('refreshToken response', $refreshTokenResponse);
+            Log::debug('refreshToken response', $refreshTokenResponse);
 
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($refreshTokenResponse, $amoId);
