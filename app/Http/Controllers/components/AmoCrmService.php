@@ -29,8 +29,6 @@
 
       public static function changeStatusOfLead($leadId, $requestBody, string $note, $amoId) {
           $integration = AmoTokens::findOrFail($amoId);
-          Log::error('$integration');
-          Log::error($integration->access_token);
           if ($integration && empty($integration->access_token)) {
               $integration = self::accessToken($integration, $amoId);
           }
@@ -38,14 +36,10 @@
           if (strtotime("now") >= $integration->expired_time) {
               $integration = self::refreshAccessToken($integration, $amoId);
           }
-          Log::error('$integration2');
-          Log::error($integration);
           if (empty($integration->access_token)) {
               throw new \Exception('AmoCrm integration not found');
           }
           $curl = new CurlTransport();
-          Log::error('domain');
-          Log::error($integration->domain);
           $url = $integration->domain . 'api/v4/leads/'.$leadId;
 
           $headers = [
@@ -54,14 +48,11 @@
           ];
 
           $response = $curl->send($url, $headers, $requestBody, 'PATCH');
-          Log::info('changeStatusResponse'.json_encode($response));
           self::addNote($integration, $leadId, $note);
       }
 
       public static function accessToken($integration, $amoId) {
           $result = false;
-          Log::error('access');
-          Log::error($integration);
 
           $url = $integration->domain . 'oauth2/access_token';
           $headers = [
@@ -79,7 +70,6 @@
           $curl = new CurlTransport();
 
           $accessTokenResponse = $curl->send($url, $headers, $requestBody);
-          Log::debug('access response', $accessTokenResponse);
           if ($curl->errorNo) {
               Log::emergency($accessTokenResponse);
           }
@@ -87,14 +77,10 @@
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($accessTokenResponse, $amoId);
           }
-          Log::error('res');
-          Log::error($result);
           return $result;
       }
 
       public static function refreshAccessToken(AmoTokens $integration, $amoId) {
-          Log::error('refresh');
-          Log::error($integration);
           $result = false;
 
           $url = $integration->domain . 'oauth2/access_token';
@@ -117,8 +103,6 @@
           if (!$curl->errorNo && $curl->responseCode == 200) {
               $result = self::updateAmocrmToken($refreshTokenResponse, $amoId);
           }
-          Log::error('res');
-          Log::error($result);
 
           return $result;
       }
@@ -331,8 +315,6 @@
                   $requestBody['contactPerson'][] = $contact_person_3;
               }
 
-              Log::emergency($requestBody['contactPerson']);
-
               $requestBody['pledgeType'] = '11';
               $curl = new CurlTransport();
               $token = '5c33597dcd8c4064a01ab10ebd4bdb12';
@@ -369,7 +351,6 @@
               }
               return 204;
           } else {
-              Log::emergency('test22');
 //        AmoCrmService::addLead($id, 'Ваша заявка по этой сделке уже отправлена! Либо создайте новый!');
           }
 
