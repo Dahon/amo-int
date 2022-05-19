@@ -18,7 +18,8 @@ class AmoIntController extends Controller
         $responseBody = $body['leads'][$typeLead][0]['custom_fields'] ?? null;
         if (!$responseBody) return false;
         $id = $body['leads'][$typeLead][0]['id'];
-        return AmoCrmService::test($id, '0003', $responseBody, 1, AmoTypeConstants::LIFE_PIPELINE_ID, AmoTypeConstants::LIFE_PENDING);
+        return 200;
+//        return AmoCrmService::test($id, '0003', $responseBody, 1, AmoTypeConstants::LIFE_PIPELINE_ID, AmoTypeConstants::LIFE_PENDING);
     }
 
     public function autoStart(Request $request) {
@@ -30,7 +31,7 @@ class AmoIntController extends Controller
         $responseBody = $body['leads'][$typeLead][0]['custom_fields'] ?? null;
         if (!$responseBody) return false;
         $id = $body['leads'][$typeLead][0]['id'];
-        return AmoCrmService::test($id, '0004', $responseBody, 2, AmoTypeConstants::AUTOSTART_PIPELINE_ID, AmoTypeConstants::AUTOSTART_PENDING);
+        return AmoCrmService::test($id, '0003', $responseBody, 2, AmoTypeConstants::AUTOSTART_PIPELINE_ID, AmoTypeConstants::AUTOSTART_PENDING);
     }
 
 }
