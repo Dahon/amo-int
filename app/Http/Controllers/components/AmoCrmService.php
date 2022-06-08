@@ -257,24 +257,30 @@
                               $contact_person[$dictionary[$value['name']]] = '0';
                           }
                           continue;
-                      } elseif ($dictionary[$value['name']] == 'fullName2' || $dictionary[$value['name']] == 'phoneNo2' ) {
-                          $contact_person_2[$dictionary[$value['name']]] = $value['values'][0]['value'];
+                      } elseif ($dictionary[$value['name']] == 'fullName2' ) {
+                          $contact_person_2['fullName'] = $value['values'][0]['value'];
+                          continue;
+                      } elseif ($dictionary[$value['name']] == 'phoneNo2' ) {
+                          $contact_person_2['phoneNo'] = $value['values'][0]['value'];
                           continue;
                       } elseif ($dictionary[$value['name']] == 'relationshipKind2') {
                           if ($value['values'][0]['value'] != '') {
-                              $contact_person_2[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
+                              $contact_person_2['relationshipKind'] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
                           } else {
-                              $contact_person_2[$dictionary[$value['name']]] = '0';
+                              $contact_person_2['relationshipKind'] = '0';
                           }
                           continue;
-                      } elseif ($dictionary[$value['name']] == 'fullName3' || $dictionary[$value['name']] == 'phoneNo3' ) {
-                          $contact_person_3[$dictionary[$value['name']]] = $value['values'][0]['value'];
+                      } elseif ($dictionary[$value['name']] == 'fullName3') {
+                          $contact_person_3['fullName'] = $value['values'][0]['value'];
+                          continue;
+                      } elseif ($dictionary[$value['name']] == 'phoneNo3' ) {
+                          $contact_person_3['phoneNo'] = $value['values'][0]['value'];
                           continue;
                       } elseif ($dictionary[$value['name']] == 'relationshipKind3') {
                           if ($value['values'][0]['value'] != '') {
-                              $contact_person_3[$dictionary[$value['name']]] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
+                              $contact_person_3['relationshipKind'] = $value['values'][0]['value'] == 'Муж(Жена)' ? '1' : ($value['values'][0]['value'] == 'Отец(Мать)' ? '2' : ($value['values'][0]['value'] == 'Сын(Дочь)' ? '3' : ($value['values'][0]['value'] == 'Брат(Сестра)' ? '4' : ($value['values'][0]['value'] == 'Дедушка(Бабушка)' ? '5' : '6'))));
                           } else {
-                              $contact_person_3[$dictionary[$value['name']]] = '0';
+                              $contact_person_3['relationshipKind'] = '0';
                           }
                           continue;
                       }
@@ -306,6 +312,8 @@
                   }
               }
               $requestBody['contactPerson'][] = $contact_person;
+              Log::emergency('222');
+              Log::emergency($contact_person);
               if (!empty($contact_person_2)) {
                   $requestBody['contactPerson'][] = $contact_person_2;
               }
