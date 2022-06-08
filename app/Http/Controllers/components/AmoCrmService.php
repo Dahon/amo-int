@@ -312,8 +312,6 @@
                   }
               }
               $requestBody['contactPerson'][] = $contact_person;
-              Log::emergency('222');
-              Log::emergency($contact_person);
               if (!empty($contact_person_2)) {
                   $requestBody['contactPerson'][] = $contact_person_2;
               }
